@@ -52,13 +52,13 @@ input = readdlm("input/day03.txt", '\n')
 C = mat([[only(input[il][ic]) for ic = 1:length(input[il])] for il = eachindex(input)]) # Convert input to matrix of characters
 S = sum([C .== s for s = ['*', '=', '#', '$', '/', '&', '@', '-', '+', '%']])           # Create matrix of places a symbol is present
 N = mat([num_vector(line) for line = input])                                            # Create number matrix of potential part numbers
-P = N .* adjacent(S)                                                                    # Find numbers adjecent to sumbols
+P = N .* adjacent(S)                                                                    # Find numbers adjecent to symbols
 Pp = rem_dup(P)                                                                         # Remove duplicate values
 println("Part 1 sum: $(sum(Pp))")                                                       # Display Part 1 result
 
 # Part 2
 St = C .== '*'                                                                          # Find potential gear locations
-star_pos = findall(==(1), St)                                                           # Tablue potential gear locations as coordinates
+star_pos = findall(==(1), St)                                                           # Tabulate potential gear locations as coordinates
 Sts = [sing_pos(pos, size(St)) for pos = star_pos]'                                     # Create single-position matricies for each potential gear location
 StsA = adjacent.(Sts)                                                                   # Create adjacency matricies for each potential gear location
 gr = [sum(rem_dup(StsA[i] .* (N.>0))) == 2 ? rat(StsA[i],N) : 0 for i=eachindex(StsA)]  # Calculate gear ratios for each potential gear location
